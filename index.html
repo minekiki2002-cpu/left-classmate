@@ -413,15 +413,13 @@ const A = {
     this.noiseHit(t+.30,{dur:.08,f0:300,f1:200,q:.5,vol:.18,type:'lowpass'}); },
   chime(f=1046.5){ if(!this.ctx) return; const t=this.now(); this.bell(f,t,1.8,.2); this.bell(f*1.5,t+.09,1.6,.12); },
   typeKey(){ if(!this.ctx) return; const ctx=this.ctx, t=this.now();
-    // sharp key strike + metal type bar + low body thunk
-    this.noiseHit(t,{dur:.035,f0:3800+Math.random()*900,f1:2200,q:1.6,vol:.55});
-    this.noiseHit(t+.004,{dur:.05,f0:1300,f1:900,q:3,vol:.18});
-    const o=ctx.createOscillator(), g=ctx.createGain(); o.type='sine'; o.frequency.setValueAtTime(150+Math.random()*30,t); o.frequency.exponentialRampToValueAtTime(70,t+.05);
-    g.gain.setValueAtTime(.32,t); g.gain.exponentialRampToValueAtTime(.001,t+.07); o.connect(g); g.connect(this.sfx); o.start(t); o.stop(t+.08); },
-  carriage(){ if(!this.ctx) return; const t=this.now();
-    this.bell(2637,t,1.1,.13); this.bell(5274,t,.6,.03);
-    this.noiseHit(t+.12,{dur:.22,f0:900,f1:2400,q:.9,vol:.2});
-    this.noiseHit(t+.34,{dur:.05,f0:600,f1:300,q:1,vol:.35,type:'lowpass'}); },
+    // light, crisp key tick: short bright click + tiny high ping, very little body
+    this.noiseHit(t,{dur:.016,f0:7000+Math.random()*1500,f1:5200,q:2.6,vol:.2});
+    const o=ctx.createOscillator(), g=ctx.createGain(); o.type='sine'; o.frequency.value=3000+Math.random()*500;
+    g.gain.setValueAtTime(.045,t); g.gain.exponentialRampToValueAtTime(.0005,t+.03); o.connect(g); g.connect(this.sfx); o.start(t); o.stop(t+.04);
+    const o2=ctx.createOscillator(), g2=ctx.createGain(); o2.type='sine'; o2.frequency.setValueAtTime(420,t); o2.frequency.exponentialRampToValueAtTime(260,t+.025);
+    g2.gain.setValueAtTime(.05,t); g2.gain.exponentialRampToValueAtTime(.0005,t+.03); o2.connect(g2); g2.connect(this.sfx); o2.start(t); o2.stop(t+.04); },
+  carriage(){ if(!this.ctx) return; const t=this.now(); this.bell(2093,t,.9,.08); this.bell(3136,t+.05,.6,.03); },
   tick(){ if(!this.ctx) return; this.bell(1567.98,this.now(),.35,.1); },
   sparkle(){ if(!this.ctx) return; const t=this.now(); [1318.5,1568,1760,2093,2637,3136].forEach((f,i)=>this.bell(f,t+i*.065,1.1,.11)); },
   knock(){ if(!this.ctx) return; const ctx=this.ctx; const t=this.now();
